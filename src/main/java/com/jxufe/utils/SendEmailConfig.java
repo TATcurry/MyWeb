@@ -14,7 +14,7 @@ public class SendEmailConfig {
 	public static final String SEND_NICKNAME="微微一笑饭特稀";
 	//密码
 	public static final String EMAIL_PWD = "********";
-	//public static final String EMAIL_PWD = "*************";
+	//public static final String EMAIL_PWD = "*******";
 	
 	
 
