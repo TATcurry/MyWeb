@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context" xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/context  http://www.springframework.org/schema/context/spring-context-4.0.xsd"
+	default-lazy-init="true">
+       
+      
+     
+    <!-- =========================================================
+         Shiro Core Components - Not Spring Specific
+         ========================================================= -->
+    
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="cacheManager" ref="cacheManager"/>
+        <!-- Single realm app.  If you have multiple realms, use the 'realms' property instead. -->
+        <property name="sessionMode" value="native"/>
+        <property name="realm" ref="jdbcRealm"/>
+    </bean>
+
+    <!-- 缓存管理器 -->
+    <bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+    
+         <!-- <property name="cacheManager" ref="ehCacheManager"/> -->
+        <property name="cacheManagerConfigFile" value="classpath:ehcache.xml"/>
+    </bean>
+
+    <!--配置Realm-->
+    <bean id="jdbcRealm" class="com.jxufe.shiro.realms.ShiroRealm">
+        <property name="credentialsMatcher">
+        	<bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+        		<property name="hashAlgorithmName" value="MD5"></property>
+        		<property name="hashIterations" value="1024"></property>
+        	</bean>
+        </property>
+    </bean>
+
+    <!-- =========================================================
+         Shiro Spring-specific integration
+         ========================================================= -->
+    
+    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+
+    <!-- 启用IOC容器中的shiro注解 ，配置 lifecycleBeanPostProcessor之后才可以-->
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
+          depends-on="lifecycleBeanPostProcessor"/>
+    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+        <property name="securityManager" ref="securityManager"/>
+    </bean>
+
+	<!--logout  -->
+    <bean id="logoutFilter" class="org.apache.shiro.web.filter.authc.LogoutFilter">  
+	   <property name="redirectUrl" value="/index.jsp" />  
+	</bean> 
+
+    <!-- 配置 shiroFilter-->
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+    	<!-- loginUrl： 当用户没有登录的时候，会重发一个login请求，引导用户去登录
+			successUrl：是当用户登录成功，转发home请求
+			unauthorizedUrl指如果请求失败，重发/unauthorized请求，引导用户到认证异常错误页面 -->
+		
+        <property name="securityManager" ref="securityManager"/>
+        <property name="loginUrl" value="/tologin"/>
+       <!--  <property name="successUrl" value="/list.jsp"/> -->
+        <property name="unauthorizedUrl" value="/unauthorizedUrl.jsp"/>
+        <property name="filters">
+            <map>
+                <entry key="authc">
+                    <bean class="com.jxufe.shiro.realms.captchaformauthenticationfilter"></bean>
+                    
+                </entry>
+                <entry key="logout" value-ref="logoutFilter" />
+            </map>
+           </property>
+       <!-- anon 可被匿名访问
+       		authc 必须认证	 -->
+        <property name="filterChainDefinitions">
+            <value>
+            	/imgs/** = anon
+                /static/** =anon
+            	/index.jsp = anon
+            	/test.jsp = anon
+               /**.ico = anon
+               / = anon
+               <!-- /musicFile/** =anon -->
+               <!-- /userImageFile/** =anon -->
+               /login = anon
+               /tologin =anon
+               /toregister =anon
+               /emailValidate =anon
+               /sendValData =anon
+               /register =anon
+               /cloud.jsp =anon
+               /test.jsp =anon
+               /img.jsp =anon
+               /changeUserPic =anon
+               /favicon.ico =anon
+               /logout =logout
+               /** = authc
+                
+            </value>
+        </property>
+    </bean>
+       
+</beans>
