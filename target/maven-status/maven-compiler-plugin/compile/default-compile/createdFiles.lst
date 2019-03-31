@@ -1,9 +1,8 @@
 com\jxufe\controller\TestController.class
 com\jxufe\service\MusicService.class
+com\jxufe\controller\SomeController.class
 com\jxufe\entity\User.class
 com\jxufe\mapper\MusicMapper.class
-com\jxufe\utils\HttpClientUtils.class
-com\jxufe\utils\CrawlerUtil.class
 com\jxufe\entity\UserExample$GeneratedCriteria.class
 com\jxufe\controller\FileController.class
 com\jxufe\mapper\UserMapper.class
@@ -12,6 +11,8 @@ com\jxufe\utils\SendEmailConfig.class
 com\jxufe\entity\UserExample.class
 com\jxufe\shiro\realms\captchaformauthenticationfilter.class
 com\jxufe\entity\MusicExample$Criterion.class
+com\jxufe\shiro\realms\RetryLimitHashedCredentialsMatcher.class
+com\jxufe\utils\ImageUtils.class
 com\jxufe\utils\EmailUtils.class
 com\jxufe\entity\UserExample$Criteria.class
 com\jxufe\controller\UserController.class

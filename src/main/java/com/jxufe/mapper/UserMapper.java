@@ -2,15 +2,16 @@ package com.jxufe.mapper;
 
 import com.jxufe.entity.User;
 import com.jxufe.entity.UserExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface UserMapper {
     long countByExample(UserExample example);
 
     int deleteByExample(UserExample example);
 
-    int deleteByPrimaryKey(Integer userId);
+    int deleteByPrimaryKey(Long userId);
 
     int insert(User record);
 
@@ -18,7 +19,7 @@ public interface UserMapper {
 
     List<User> selectByExample(UserExample example);
 
-    User selectByPrimaryKey(Integer userId);
+    User selectByPrimaryKey(Long userId);
 
     int updateByExampleSelective(@Param("record") User record, @Param("example") UserExample example);
 

@@ -7,11 +7,9 @@ import java.util.Random;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.http.HttpRequest;
+import com.jxufe.entity.User;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.IncorrectCredentialsException;
-import org.apache.shiro.authc.UnknownAccountException;
-import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authc.*;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
-import com.jxufe.entity.User;
 import com.jxufe.service.UserService;
 import com.jxufe.shiro.realms.ShiroRealm;
 import com.jxufe.utils.EmailUtils;
@@ -68,6 +65,16 @@ public class UserController {
                 model.addAttribute("loginError", "密码输入错误"); 
                 return "login";
         	}
+			catch(ExcessiveAttemptsException ice){
+				System.out.println("对用户[" + username + "]进行登录验证..超过5次验证未通过,错误的凭证");
+				model.addAttribute("loginError", "错误登录次数超过5次,请10分钟后再试！");
+				return "login";
+			}
+			catch (AuthenticationException e) {
+				System.out.println("对用户[" + username + "]未知错误，请稍后重试");
+				model.addAttribute("loginError", "未知错误，请稍后重试");
+				return "login";
+			}
         }  
       //获取之前的地址
       	String resultPageURL = InternalResourceViewResolver.REDIRECT_URL_PREFIX + "/";

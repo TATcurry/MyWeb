@@ -2,12 +2,12 @@ package com.jxufe.service.impl;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.jxufe.entity.User;
 import com.jxufe.entity.UserExample;
 import com.jxufe.mapper.UserMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.jxufe.service.UserService;
 
 @Service

@@ -2,13 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jxufe.mapper.UserMapper">
   <resultMap id="BaseResultMap" type="com.jxufe.entity.User">
-    <id column="user_id" jdbcType="INTEGER" property="userId" />
+    <id column="user_id" jdbcType="BIGINT" property="userId" />
     <result column="user_name" jdbcType="VARCHAR" property="userName" />
     <result column="password" jdbcType="VARCHAR" property="password" />
     <result column="user_email" jdbcType="VARCHAR" property="userEmail" />
     <result column="register_code" jdbcType="VARCHAR" property="registerCode" />
     <result column="validate_status" jdbcType="INTEGER" property="validateStatus" />
     <result column="user_pic" jdbcType="VARCHAR" property="userPic" />
+    <result column="lock_status" jdbcType="INTEGER" property="lockStatus" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -69,7 +70,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    user_id, user_name, password, user_email, register_code, validate_status, user_pic
+    user_id, user_name, password, user_email, register_code, validate_status, user_pic, 
+    lock_status
   </sql>
   <select id="selectByExample" parameterType="com.jxufe.entity.UserExample" resultMap="BaseResultMap">
     select
@@ -85,15 +87,15 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from user_table
-    where user_id = #{userId,jdbcType=INTEGER}
+    where user_id = #{userId,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from user_table
-    where user_id = #{userId,jdbcType=INTEGER}
+    where user_id = #{userId,jdbcType=BIGINT}
   </delete>
   <delete id="deleteByExample" parameterType="com.jxufe.entity.UserExample">
     delete from user_table
@@ -104,10 +106,10 @@
   <insert id="insert" parameterType="com.jxufe.entity.User">
     insert into user_table (user_id, user_name, password, 
       user_email, register_code, validate_status, 
-      user_pic)
-    values (#{userId,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      user_pic, lock_status)
+    values (#{userId,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
       #{userEmail,jdbcType=VARCHAR}, #{registerCode,jdbcType=VARCHAR}, #{validateStatus,jdbcType=INTEGER}, 
-      #{userPic,jdbcType=VARCHAR})
+      #{userPic,jdbcType=VARCHAR}, #{lockStatus,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.jxufe.entity.User">
     insert into user_table
@@ -133,10 +135,13 @@
       <if test="userPic != null">
         user_pic,
       </if>
+      <if test="lockStatus != null">
+        lock_status,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="userId != null">
-        #{userId,jdbcType=INTEGER},
+        #{userId,jdbcType=BIGINT},
       </if>
       <if test="userName != null">
         #{userName,jdbcType=VARCHAR},
@@ -156,6 +161,9 @@
       <if test="userPic != null">
         #{userPic,jdbcType=VARCHAR},
       </if>
+      <if test="lockStatus != null">
+        #{lockStatus,jdbcType=INTEGER},
+      </if>
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.jxufe.entity.UserExample" resultType="java.lang.Long">
@@ -168,7 +176,7 @@
     update user_table
     <set>
       <if test="record.userId != null">
-        user_id = #{record.userId,jdbcType=INTEGER},
+        user_id = #{record.userId,jdbcType=BIGINT},
       </if>
       <if test="record.userName != null">
         user_name = #{record.userName,jdbcType=VARCHAR},
@@ -188,6 +196,9 @@
       <if test="record.userPic != null">
         user_pic = #{record.userPic,jdbcType=VARCHAR},
       </if>
+      <if test="record.lockStatus != null">
+        lock_status = #{record.lockStatus,jdbcType=INTEGER},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -195,13 +206,14 @@
   </update>
   <update id="updateByExample" parameterType="map">
     update user_table
-    set user_id = #{record.userId,jdbcType=INTEGER},
+    set user_id = #{record.userId,jdbcType=BIGINT},
       user_name = #{record.userName,jdbcType=VARCHAR},
       password = #{record.password,jdbcType=VARCHAR},
       user_email = #{record.userEmail,jdbcType=VARCHAR},
       register_code = #{record.registerCode,jdbcType=VARCHAR},
       validate_status = #{record.validateStatus,jdbcType=INTEGER},
-      user_pic = #{record.userPic,jdbcType=VARCHAR}
+      user_pic = #{record.userPic,jdbcType=VARCHAR},
+      lock_status = #{record.lockStatus,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -227,8 +239,11 @@
       <if test="userPic != null">
         user_pic = #{userPic,jdbcType=VARCHAR},
       </if>
+      <if test="lockStatus != null">
+        lock_status = #{lockStatus,jdbcType=INTEGER},
+      </if>
     </set>
-    where user_id = #{userId,jdbcType=INTEGER}
+    where user_id = #{userId,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.jxufe.entity.User">
     update user_table
@@ -237,7 +252,8 @@
       user_email = #{userEmail,jdbcType=VARCHAR},
       register_code = #{registerCode,jdbcType=VARCHAR},
       validate_status = #{validateStatus,jdbcType=INTEGER},
-      user_pic = #{userPic,jdbcType=VARCHAR}
-    where user_id = #{userId,jdbcType=INTEGER}
+      user_pic = #{userPic,jdbcType=VARCHAR},
+      lock_status = #{lockStatus,jdbcType=INTEGER}
+    where user_id = #{userId,jdbcType=BIGINT}
   </update>
 </mapper>

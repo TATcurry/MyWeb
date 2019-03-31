@@ -28,9 +28,11 @@
     <!--配置Realm-->
     <bean id="jdbcRealm" class="com.jxufe.shiro.realms.ShiroRealm">
         <property name="credentialsMatcher">
-        	<bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+        	<bean class="com.jxufe.shiro.realms.RetryLimitHashedCredentialsMatcher">
+                <constructor-arg ref="cacheManager" />
         		<property name="hashAlgorithmName" value="MD5"></property>
         		<property name="hashIterations" value="1024"></property>
+                <property name="storedCredentialsHexEncoded" value="true" />
         	</bean>
         </property>
     </bean>

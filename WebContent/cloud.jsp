@@ -30,22 +30,22 @@ body{background:#BFEFFF;}
 	
 </body>
     <script type="text/javascript">
-    const ap9 = new APlayer({  
-    container: document.getElementById('aplayer1'),
-    mini: true,
-    autoplay: false,
-    theme: '#FADFA3',
-    lrcType: 3,
-    audio: [{
-        name: '光るなら',
-        artist: 'Goose house',
-        url: 'https://moeplayer.b0.upaiyun.com/aplayer/hikarunara.mp3',
-        cover: 'https://moeplayer.b0.upaiyun.com/aplayer/hikarunara.jpg',
-        lrc: 'https://moeplayer.b0.upaiyun.com/aplayer/hikarunara.lrc',
-        theme: '#ebd0c2'
-    }]
-    });
-    /* $.ajax({
+    // const ap9 = new APlayer({
+    // container: document.getElementById('aplayer1'),
+    // mini: true,
+    // autoplay: false,
+    // theme: '#FADFA3',
+    // lrcType: 3,
+    // audio: [{
+    //     name: '光るなら',
+    //     artist: 'Goose house',
+    //     url: 'https://moeplayer.b0.upaiyun.com/aplayer/hikarunara.mp3',
+    //     cover: 'https://moeplayer.b0.upaiyun.com/aplayer/hikarunara.jpg',
+    //     lrc: 'https://moeplayer.b0.upaiyun.com/aplayer/hikarunara.lrc',
+    //     theme: '#ebd0c2'
+    // }]
+    // });
+    $.ajax({
         url: "https://api.i-meto.com/meting/api?server=netease&type=playlist&id=649371983",
         success: function (e) {
         	const ap = new APlayer({
@@ -143,7 +143,6 @@ body{background:#BFEFFF;}
             });
         }
     });
-     */
 
         
     </script>

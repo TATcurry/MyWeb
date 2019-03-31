@@ -15,7 +15,7 @@
   
   <!-- 配置数据库连接 -->
     <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-        connectionURL="jdbc:mysql://localhost:3306/mywebsite"
+        connectionURL="jdbc:mysql://94.191.85.22:3306/mywebsite"
         userId="root"
         password="123456">
     </jdbcConnection>
@@ -25,18 +25,18 @@
     </javaTypeResolver>
 	
 	<!-- 指定javaBean生成位置 -->
-    <javaModelGenerator targetPackage="com.jxufe.entity" targetProject=".\src\main\java">
+    <javaModelGenerator targetPackage="com.jxufe" targetProject=".\src\main\java">
       <property name="enableSubPackages" value="true" />
       <property name="trimStrings" value="true" />
     </javaModelGenerator>
 	
 	<!-- 指定sql映射文件的生成地址 -->
-    <sqlMapGenerator targetPackage="mapper"  targetProject=".\src\main\resources">
+    <sqlMapGenerator targetPackage="mappers"  targetProject=".\src\main\resources">
       <property name="enableSubPackages" value="true" />
     </sqlMapGenerator>
 	
 	<!-- 指定dao接口的位置 mapper接口 -->
-    <javaClientGenerator type="XMLMAPPER" targetPackage="com.jxufe.mapper"  targetProject=".\src\main\java">
+    <javaClientGenerator type="XMLMAPPER" targetPackage="com.jxufe"  targetProject=".\src\main\java">
       <property name="enableSubPackages" value="true" />
     </javaClientGenerator>
 	

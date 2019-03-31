@@ -13,7 +13,7 @@ public class SendEmailConfig {
 	//发送邮件昵称
 	public static final String SEND_NICKNAME="微微一笑饭特稀";
 	//密码
-	public static final String EMAIL_PWD = "********";
+	public static final String EMAIL_PWD = "wb858687";
 	//public static final String EMAIL_PWD = "*******";
 	
 	

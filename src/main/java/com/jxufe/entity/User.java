@@ -1,7 +1,7 @@
 package com.jxufe.entity;
 
 public class User {
-    private Integer userId;
+    private Long userId;
 
     private String userName;
 
@@ -15,11 +15,13 @@ public class User {
 
     private String userPic;
 
-    public Integer getUserId() {
+    private Integer lockStatus;
+
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
@@ -69,5 +71,13 @@ public class User {
 
     public void setUserPic(String userPic) {
         this.userPic = userPic == null ? null : userPic.trim();
+    }
+
+    public Integer getLockStatus() {
+        return lockStatus;
+    }
+
+    public void setLockStatus(Integer lockStatus) {
+        this.lockStatus = lockStatus;
     }
 }

@@ -432,7 +432,7 @@
 					findUrl = result.content.findMusic.location;
 					findName = result.content.findMusic.musicName;
 					//$("#player").src="./musicFile/"+findUrl;
-					alert(findUrl)
+					//alert(findUrl)
 					window.SongUrl = "/MyWeb/musicFile/"+findUrl;
 					window.SongName = findName;
 					//
